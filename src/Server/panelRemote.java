@@ -16,6 +16,7 @@ public class panelRemote extends JPanel implements ActionListener {
 	private JTextField txtPinControl;
 	private JButton btnConnect;
 	private JButton btnStop;
+	
 
 	/**
 	 * ham GUI
@@ -77,6 +78,7 @@ public class panelRemote extends JPanel implements ActionListener {
 		btnStop.setForeground(new Color(0, 0, 0));
 		btnStop.setBounds(108, 438, 190, 46);
 		panel.add(btnStop);
+		btnStop.addActionListener(this);
 		
 		JLabel lblNewLabel_3 = new JLabel("Active Connections");
 		lblNewLabel_3.setFont(new Font("Verdana", Font.BOLD, 20));
@@ -141,6 +143,7 @@ public class panelRemote extends JPanel implements ActionListener {
 	//
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnStop) {
+			InitConnection.closeConnect();
 		}
 	}
 	//

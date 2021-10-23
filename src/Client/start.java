@@ -12,6 +12,12 @@ import java.awt.Panel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
@@ -20,14 +26,17 @@ import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 
 public class start extends JFrame {
-
+	String host = "";
+	public int port = 7700;
 	private JPanel contentPane;
 	private panelRemote panelRemote;
 	private panelChat panelChat;
+	Socket socket = null;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -44,8 +53,8 @@ public class start extends JFrame {
 	 * Create the frame.
 	 */
 	public start() {
-		
-		panelRemote = new panelRemote("Client");
+	
+		panelRemote = new panelRemote(socket);
 		panelChat = new panelChat();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

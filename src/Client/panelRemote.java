@@ -3,10 +3,11 @@ package Client;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.Socket;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -17,6 +18,8 @@ public class panelRemote extends JPanel implements ActionListener {
 	private JTextField txtPartId;
 	private JTextField txtPinControl;
 	private JButton btnConnect;
+	private Socket socket = null;
+	public int port = 7700;
 
 	/**
 	 * Create the panel.
@@ -136,8 +139,16 @@ public class panelRemote extends JPanel implements ActionListener {
 	//
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnConnect) {
-			if((new SendRequest()).isConnected(txtPartId.getText(), txtPinControl.getText())) {
-				new GUI_Screen("BKViewer");
+			try {
+				socket = new Socket(txtPartId.getText(), port);
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			if((new SendRequest()).isConnected(socket ,txtPinControl.getText())) {
+				new GUI_Screen(socket);
+				
 			}
 			else {
 
@@ -148,8 +159,8 @@ public class panelRemote extends JPanel implements ActionListener {
 	//
 	//Ham dung
 	//
-	public panelRemote(String st) {
-		super();
+	public panelRemote(Socket socket) {
+		this.socket = socket;
 		GUI();
 	}
 }
